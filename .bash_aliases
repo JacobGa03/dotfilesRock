@@ -1,7 +1,14 @@
 # Here are all the aliases for your bash scripting
-# some more ls aliases (given by default in bash)
+
 # Show if a link exists between two files ('sl' = show link)
 alias sl='eza --only-files -l'
+# Syncthing based aliases. enabling, start, and end are long
+alias syncstart='sudo systemctl start syncthing@$USER'
+alias syncstop='sudo systemctl stop syncthing@$USER'
+alias syncenable='sudo systemctl enable syncthing@$USER'
+alias syncstatus='sudo systemctl status syncthing@$USER'
+# Android studio start
+alias asstart='cd ~/Desktop/android-studio/bin && ./studio.sh'
 # 'ls' Uses 'eza' CLI instead of 'ls'
 alias l='eza'
 alias la='eza -A'
