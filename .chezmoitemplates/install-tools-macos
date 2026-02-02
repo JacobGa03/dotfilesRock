@@ -1,0 +1,19 @@
+{{ define "install-tools-macos" }}
+echo "Installing tools from Homebrew..."
+
+if ! command -v brew &> /dev/null; then
+    echo "Homebrew not found, installing now..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+brew install \
+    fzf \
+    ripgrep \
+    git \
+    zoxide \
+    neovim \
+    bash \
+    diff-so-fancy
+
+echo "Installed all CLI tools for macOS!"
+{{ end }}

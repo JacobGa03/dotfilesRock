@@ -1,0 +1,18 @@
+{{ define "install-nvim-prereqs" }}
+echo "#####Installing outside dependencies for Neovim#####"
+if ! command -v rustup &> /dev/null; then
+    echo "Installing rust up..."
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    source ~/.cargo/env
+fi
+
+echo "Installing tree-sitter-cli from cargo..."
+cargo install tree-sitter-cli
+
+if command -v tree-sitter --version &> /dev/null; then
+    echo "tree-sitter-cli installed..."
+else
+    echo "There was an issue installing tree-sitter-cli!"
+    exit 1
+fi
+{{ end }}

@@ -1,0 +1,22 @@
+
+echo "Installing tools for apt..."
+
+# Install important cli tools
+sudo apt update
+sudo apt install -y \
+    fzf \
+    git \
+    ripgrep \
+    zsh \
+    git \
+    curl \
+    multitail \
+    zoxide
+
+echo "Setting up tools not directly avaliable from apt..."
+
+sudo add-apt-repository ppa:aos1/diff-so-fancy
+sudo apt update
+sudo apt install diff-so-fancy
+
+echo "apt packages installed!"

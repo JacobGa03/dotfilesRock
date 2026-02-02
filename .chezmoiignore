@@ -1,0 +1,16 @@
+{{- if ne .chezmoi.os "linux" }}
+   .config/
+   .config/**
+{{- end }}
+
+{{- if ne .chezmoi.os "darwin" }}
+    /Users/jacob.gadberry/
+    /Users/jacob.gadberry/**
+{{- end }}
+
+{{- if ne .chezmoi.os "windows" }}
+   AppData/Local/
+   AppData/Local/**
+{{- end }}
+
+{{- .chezmoi.sourceDir -}}/scripts

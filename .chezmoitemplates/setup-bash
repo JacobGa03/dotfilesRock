@@ -1,0 +1,23 @@
+{{ define "setup-bash" }}
+echo "#####Setting up Bash on Your Machine#####"
+
+# Ensure 'bash' version 5.x (or greater) is installed
+if [[ "$BASH_VERSION" =~ ^5\.* ]]; then
+    echo "Updated bash verison already installed!"
+else
+    # Update the version of bash
+{{ if eq .chezmoi.os "darwin" }}
+   brew update
+   brew install bash  
+{{ else if eq .chezmoi.os "linux" }}
+    sudo apt update
+    sudo apt install bash
+{{ end -}}
+fi
+
+if [[ ! $(basename "$SHELL") == bash ]];
+    echo "Your shell is not bash! Changing it now..."
+    chsh -s $(which bash) $(whoami)
+fi
+echo "Bash setup is complete!"
+{{ end }}

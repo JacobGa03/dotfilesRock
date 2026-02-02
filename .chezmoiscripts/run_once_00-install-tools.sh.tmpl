@@ -1,0 +1,19 @@
+{{ if eq .chezmoi.os "windows" -}}
+echo "Need to install package manger for windows"
+
+{{ else if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+set -e
+echo "======Beginning Setup for Linux======"
+{{ template "install-tools-linux" . }}
+{{ template "install-nvim-prereqs" . }}
+{{ template "setup-bash" . }}
+
+{{ else if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -e
+echo "======Beginning Setup for macOS======"
+{{ template "install-tools-macos" . }}
+{{ template "setup-bash" . }}
+
+{{ end -}}
