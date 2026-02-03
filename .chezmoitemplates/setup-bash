@@ -15,7 +15,7 @@ else
 {{ end -}}
 fi
 
-if [[ ! $(basename "$SHELL") == bash ]];
+if [[ ! $(basename "$SHELL") == bash ]]; then
     echo "Your shell is not bash! Changing it now..."
     chsh -s $(which bash) $(whoami)
 fi
