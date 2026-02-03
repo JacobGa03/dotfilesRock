@@ -1,0 +1,61 @@
+# Here are all the aliases for your bash scripting
+
+# Alias's for multiple directory listing commands
+alias la='ls -Alh --color=auto'                # show hidden files
+alias ls='ls -aFh --color=always' # add colors and file type extensions
+alias lx='ls -lXBh --color=auto'               # sort by extension
+alias lk='ls -lSrh --color=auto'               # sort by size
+alias lc='ls -ltcrh --color=auto'              # sort by change time
+alias lu='ls -lturh --color=auto'              # sort by access time
+alias lr='ls -lRh --color=auto'                # recursive ls
+alias lt='ls -ltrh --color=auto'               # sort by date
+alias lm='ls -alh --color=auto |more'          # pipe through 'more'
+alias lw='ls -xAh --color=auto'                # wide listing format
+alias ll='ls -Fls --color=auto'                # long listing format
+alias labc='ls -lap --color=auto'              # alphabetical sort
+alias lf="ls -l --color=auto | egrep -v '^d'"  # files only
+alias ldir="ls -l --color=auto | egrep '^d'"   # directories only
+alias lla='ls -Al --color=auto'                # List and Hidden Files
+alias las='ls -A --color=auto'                 # Hidden Files
+alias lls='ls -l  --color=auto'                 # List
+#
+# 'git' based aliases
+alias gi='git init'
+alias ga='git add'
+alias gc='git commit -m'
+alias gs='git status'
+alias gpl='git pull'
+alias gpu='git push'
+alias gch='git checkout'
+alias gcl='git clone'
+alias gbr='git branch -v'
+alias gf='git fetch'
+alias gst='git stash'
+
+# Vim is Neovim
+alias vim='nvim'
+alias fzvim='vim -o `fzf`'
+alias cd..='cd ..'
+alias home='cd ~'
+
+# Search running processes
+alias p="ps aux | grep "
+alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
+
+# Count all files (recursively) in the current folder
+alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
+
+alias tree='tree -CAhF --dirsfirst'
+alias treed='tree -CAFd'
+
+# Alias's for archives
+alias mktar='tar -cvf'
+alias mkgz='tar -cvzf'
+alias untar='tar -xvf'
+alias ungz='tar -xvzf'
+
+{{ if eq .chezmoi.os "linux" }}
+{{ template "dot_bashrc_alias-linux" . }}
+{{ else if eq .chezmoi.os "darwin" }}
+{{ template "dot_bashrc_alias-macos" . }}
+{{ end }}

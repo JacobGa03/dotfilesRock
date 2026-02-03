@@ -1,0 +1,22 @@
+{{ define "dot_bash_alias-linux"}}
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Syncthing based aliases. enabling, start, and end are long
+alias syncactivate='sudo systemctl enable syncthing@$USER && sudo systemctl start syncthing@$USER'
+alias syncstart='sudo systemctl start syncthing@$USER'
+alias syncstop='sudo systemctl stop syncthing@$USER'
+alias syncenable='sudo systemctl enable syncthing@$USER'
+alias syncstatus='sudo systemctl status syncthing@$USER' 
+# Android studio start
+alias asstart='cd ~/Desktop/android-studio/bin && ./studio.sh'
+
+# Custom Linux commands
+# Open the current directory in the file manager (Dolphin for this distro
+alias dolphin='dolphin . &'
+alias install='sudo nala install'
+alias search='nala search'
+alias python='python3'
+alias update='sudo nala update && sudo nala upgrade'
+{{ end }}

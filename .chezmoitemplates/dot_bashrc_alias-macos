@@ -1,0 +1,3 @@
+{{ define "dot_bashrc_alias-macos"}}
+##### TBD FOR MACOS #####
+{{ end }}
