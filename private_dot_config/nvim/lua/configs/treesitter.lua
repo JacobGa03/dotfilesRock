@@ -11,8 +11,7 @@ local options = {
 		-- "gotmpl",
 		-- "gowork",
 		-- "haskell",
-		"javascript",
-		"typescript",
+		"java",
 		"lua",
 		"luadoc",
 		-- "make",
@@ -25,8 +24,6 @@ local options = {
 		"vimdoc",
 		"yaml",
 	},
-	sync_install = false,
-	auto_intstall = true,
 
 	highlight = {
 		enable = true,
@@ -36,4 +33,4 @@ local options = {
 	indent = { enable = true },
 }
 
-require("nvim-treesitter.configs").setup(options)
+require("nvim-treesitter").setup(options)
