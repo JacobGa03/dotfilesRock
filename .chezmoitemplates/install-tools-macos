@@ -8,6 +8,7 @@ fi
 
 brew install \
     fzf \
+    eza \
     ripgrep \
     git \
     zoxide \

@@ -5,12 +5,14 @@ echo "Installing tools for apt..."
 sudo apt update
 sudo apt install -y \
     fzf \
+    eza \
     git \
     ripgrep \
     zsh \
     git \
     curl \
     multitail \
+    less \
     zoxide
 
 echo "Setting up tools not directly avaliable from apt..."

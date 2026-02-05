@@ -4,13 +4,6 @@ case $- in
       *) return;;
 esac
 
-# Enable bash programmable completion features in interactive shells
-if [ -f /usr/share/bash-completion/bash_completion ]; then
-	. /usr/share/bash-completion/bash_completion
-elif [ -f /etc/bash_completion ]; then
-	. /etc/bash_completion
-fi
-
 # Expand the history size
 export HISTFILESIZE=10000
 export HISTSIZE=500
@@ -58,15 +51,11 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+# Enable bash programmable completion features in interactive shells
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+	source /usr/share/bash-completion/bash_completion.sh
+elif [ -f /etc/bash_completion ]; then
+	source /etc/bash_completion.sh
 fi
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -87,11 +76,9 @@ eval "$(zoxide init bash)"
 # Initialze starship
 eval "$(starship init bash)"
 
-# Export your important path variables here
-export PATH="/home/jacob/development/flutter/bin:$PATH"
-export PATH="/home/jacob/Android/Sdk/:$PATH"
+{{ if eq .chezmoi.os "linux" }}
+{{ template "dot_bashrc/dot_bashrc-linux" . }}
+{{ else if eq .chezmoi.os "darwin" }}
+{{ template "dot_bashrc/dot_bashrc-macos" . }}
+{{ end }}
 
-[ -f "/home/jacob/.ghcup/env" ] && . "/home/jacob/.ghcup/env" # ghcup-env
-
-# Source rust configuration
-source "$HOME/.cargo/env"

@@ -1,0 +1,3 @@
+{{ define "dot_bashrc-macos" }}
+# Here are macOS specific configs
+{{ end }}
