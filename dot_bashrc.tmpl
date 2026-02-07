@@ -51,15 +51,44 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-# Enable bash programmable completion features in interactive shells
-if [ -f /usr/share/bash-completion/bash_completion ]; then
-	source /usr/share/bash-completion/bash_completion.sh
-elif [ -f /etc/bash_completion ]; then
-	source /etc/bash_completion.sh
-fi
+__fzf_historial() {
+  echo " "
+  echo -ne "\033[2;H"
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+  local histfile="${HISTFILE:-$HOME/.bash_history}"
+  [[ ! -f "$histfile" ]] && return
+
+  local lang="${LANG:-en}"
+  local titulo prompt
+  if [[ "$lang" =~ ^es ]]; then
+    titulo="Command history"
+    prompt="Command ▶ "
+  else
+    titulo="Command history"
+    prompt="Command ▶ "
+  fi
+
+  local cmd
+  cmd=$(awk '{ l[NR]=$0 } END { for (i=NR;i>0;i--) print l[i] }' "$histfile" \
+        | grep -v '^#' | grep -v '^$' \
+        | fzf \
+            --height=50% \
+            --layout=default \
+            --border=rounded \
+            --cycle \
+            --border-label="] $titulo [" \
+            --preview='echo {}' \
+            --preview-window=down:0:hidden \
+            --margin=1,35% \
+            --color='border:2,label:6:bold,bg+:1,fg+:15:bold,pointer:6:bold,marker:2:bold,prompt:6:bold' \
+            --pointer='▶ ' \
+            --marker='▶ ' \
+            --prompt="$prompt")
+
+  [[ -n "$cmd" ]] && READLINE_LINE="$cmd" && READLINE_POINT="${#cmd}"
+}
+
+bind -x '"\C-r": __fzf_historial'
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
@@ -76,8 +105,8 @@ eval "$(zoxide init bash)"
 # Initialze starship
 eval "$(starship init bash)"
 
-{{ if eq .chezmoi.os "linux" }}
-{{ template "dot_bashrc/dot_bashrc-linux" . }}
+{{ if eq .chezmoi.os "linux" -}}
+{{ template "dot_bashrc/dot_bashrc-linux" . -}}
 {{ else if eq .chezmoi.os "darwin" }}
 {{ template "dot_bashrc/dot_bashrc-macos" . }}
 {{ end }}

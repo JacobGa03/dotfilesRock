@@ -42,13 +42,19 @@ function ftext() {
 alias whatismyip="whatsmyip"
 function whatsmyip () {
     # Internal IP Lookup.
-    if command -v ip &> /dev/null; then
+{{ if eq .chezmoi.os "linux" }}
+    if command -v hostname &> /dev/null; then
         echo -n "Internal IP: "
-        ip addr show wlan0 | grep "inet " | awk '{print $2}' | cut -d/ -f1
+        ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v 127.0.0.1 | head -n 1
     else
         echo -n "Internal IP: "
-        ifconfig wlan0 | grep "inet " | awk '{print $2}'
+        hostname -I | awk '{print $1}'
     fi
+{{ else if eq .chezmoi.os "darwin" }}
+    if command -v ipconfig &> /dev/null; then
+        echo -n "Internal IP: "
+        ipconfig getifaddr en0
+{{ end -}}
 
     # External IP Lookup
     echo -n "External IP: "
