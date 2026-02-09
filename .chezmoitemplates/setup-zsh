@@ -1,0 +1,14 @@
+
+if [[ ! $(basename "$SHELL") == zsh ]]; then
+    echo "Your shell is not zsh! Changing it now..."
+    chsh -s $(which zsh) $(whoami)
+fi
+
+echo "Setting up Starship..."
+curl -sS https://starship.rs/install.sh | sh
+sleep 3
+
+echo "Setting up theme..."
+starship preset nerd-font-symbols -o ~/.config/starship.toml
+
+echo "Zsh setup is complete!"
