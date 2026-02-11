@@ -8,6 +8,7 @@ echo "======Beginning Setup for Linux======"
 {{ template "install-tools-linux" . }}
 {{ template "install-nvim-prereqs" . }}
 {{ template "setup-bash" . }}
+{{ template "setup-font" . }}
 
 {{ else if eq .chezmoi.os "darwin" -}}
 #!/bin/bash
@@ -16,5 +17,6 @@ echo "======Beginning Setup for macOS======"
 {{ template "install-tools-macos" . }}
 {{ template "install-nvim-prereqs" . }}
 {{ template "setup-zsh" . }}
+{{ template "setup-font" . }}
 
 {{ end -}}

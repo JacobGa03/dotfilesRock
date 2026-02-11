@@ -1,24 +1,54 @@
+function is_installed(){
+    dpkg -s "$1" &> /dev/null
+}
 
-echo "Installing tools for apt..."
+function is_upgradable() {
+    apt list --upgradable 2>/dev/null | grep -q "^$1/"
+}
+function is_ppa_added(){
+    # Check and see if the source was added manually
+    grep -Rq "^deb .*$1" /etc/apt/sources.list /etc/apt/sources.list.d/
+}
 
+packages=(
+    fzf 
+    eza 
+    git 
+    ripgrep 
+    zsh 
+    git 
+    curl
+    multitail 
+    less 
+    zoxide
+)
+
+ppas=(
+    aos1/diff-so-fancy
+)
 # Install important cli tools
 sudo apt update
-sudo apt install -y \
-    fzf \
-    eza \
-    git \
-    ripgrep \
-    zsh \
-    git \
-    curl \
-    multitail \
-    less \
-    zoxide
+
+echo "Installing tools for apt..."
+for package in "${packages[@]}"; do
+    if ! is_installed "$package"; then
+        sudo apt install -y -qq "$package"
+    elif is_upgradable "$package"; then
+        sudo apt install -y -qq "$package"
+    else
+        echo "$package is already up to date!"
+    fi
+done
 
 echo "Setting up tools not directly avaliable from apt..."
-
-sudo add-apt-repository ppa:aos1/diff-so-fancy
-sudo apt update
-sudo apt install diff-so-fancy
+for ppa in "${ppas[@]}"; do
+    if ! is_ppa_added "$1"; then
+        sudo add-apt-repository ppa:"$ppa"
+        sudo apt update
+        sudo apt install "$ppa"
+    else
+        echo "$ppa is already up to date!"
+    fi
+done
 
 echo "apt packages installed!"

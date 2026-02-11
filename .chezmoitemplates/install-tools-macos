@@ -1,4 +1,12 @@
 {{ define "install-tools-macos" }}
+function is_installed() {
+    brew list --formula | grep -qx "$1"
+}
+
+function is_outdated() {
+    brew outdated --formula | grep -qx "$1"
+}
+
 echo "Installing tools from Homebrew..."
 
 if ! command -v brew &> /dev/null; then
@@ -6,15 +14,28 @@ if ! command -v brew &> /dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-brew install \
-    fzf \
-    eza \
-    ripgrep \
-    git \
-    zoxide \
-    neovim \
-    bash \
+brew update -q
+
+packages=(
+    fzf
+    eza
+    ripgrep
+    git
+    zoxide
+    neovim
+    bash
     diff-so-fancy
+)
+
+for package in "${packages[@]}"; do
+    if ! is_installed "$package"; then
+        brew install "$package"
+    elif is_outdated "$package"; then
+        brew upgrade "$package"
+    else
+        echo "$package is up to date!"
+    fi
+done
 
 echo "Installed all CLI tools for macOS!"
 {{ end }}
