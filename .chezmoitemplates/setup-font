@@ -1,0 +1,49 @@
+{{- if eq .chezmoi.os "linux" -}}
+FONT_DIR="$HOME/.local/share/fonts"
+FONT_NAME="DroidSansM Nerd Font"
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/DroidSansMono.zip"
+
+# Check if font is already installed
+if fc-list | grep -q "$FONT_NAME"; then
+    echo "Font already installed"
+    exit 0
+fi
+
+# Create fonts directory
+mkdir -p "$FONT_DIR"
+
+# Download and install
+TEMP_DIR=$(mktemp -d)
+cd "$TEMP_DIR"
+curl -fLo DroidSansMono.zip "$FONT_URL"
+unzip -q DroidSansMono.zip -d "$FONT_DIR/DroidSansMono"
+rm DroidSansMono.zip
+
+# Refresh font cache
+fc-cache -fv
+
+echo "$FONT_NAME installed successfully"
+
+{{- else if eq .chezmoi.os "darwin" -}}
+FONT_DIR="$HOME/Library/Fonts"
+FONT_NAME="DroidSansM Nerd Font"
+FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/DroidSansMono.zip"
+
+# Check if font is already installed
+if fc-list | grep -q "$FONT_NAME"; then
+    echo "Font already installed"
+    exit 0
+fi
+
+# Create fonts directory
+mkdir -p "$FONT_DIR"
+
+# Download and install
+TEMP_DIR=$(mktemp -d)
+cd "$TEMP_DIR"
+curl -fLo DroidSansMono.zip "$FONT_URL"
+unzip -q DroidSansMono.zip -d "$FONT_DIR"
+rm DroidSansMono.zip
+
+echo "$FONT_NAME installed successfully"
+{{- end -}}
