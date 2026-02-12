@@ -11,10 +11,10 @@ config.initial_cols = 120
 config.initial_rows = 28
 
 -- or, changing the font size and color scheme.
-config.font_size = 13
+config.font_size = 15
 config.color_scheme = "GitHub Dark"
 config.font = wezterm.font({
-	family = "DroidSansMNerd Font",
+	family = "DroidSansM Nerd Font",
 	harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
 })
 
