@@ -1,6 +1,8 @@
 [user]
 	name = {{ .name | quote }}
 	email = {{ .email | quote }}
+[core]
+    pager = diff-so-fancy | less --tabs=4 -RFX
 [push]
 	default = current
     autoSetupRemote = true
@@ -29,6 +31,8 @@
 [maintenance]
     auto = true
     strategy = incremental
+[interactive]
+    diffFilter = diff-so-fancy --patch
 [alias]
     graph = log --all --graph --decorate --oneline
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
@@ -42,3 +46,19 @@
     templateDir = {{ .chezmoi.homeDir }}/.git-template
 [http]
     postBuffer = 524288000
+[color]
+    ui = true
+
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
