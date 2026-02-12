@@ -1,0 +1,74 @@
+## History Control
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt APPEND_HISTORY
+HISTSIZE=1000
+SAVEHIST=2000
+HISTFILE=~/.zsh_history
+ 
+if [[ -f ~/.bash_aliases ]]; then
+    source ~/.bash_aliases
+fi
+
+if [[ -f ~/.bash_functions ]]; then
+    source ~/.bash_functions
+fi
+
+if [[ -f ~/.bash_mod ]]; then
+    source ~/.bash_mod
+fi
+
+# Aliases
+alias maven="mvn"
+
+# VENV
+# --- Venv Display ---
+get_venv_name() {
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        echo "($(basename "$VIRTUAL_ENV"))"
+    fi
+}
+update_vcs_info() {
+    vcs_info
+    # Venv prompt (only if active)
+    VENV_PROMPT=""
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        VENV_PROMPT="$OPEN_BRACKET%F{$GREEN}$(get_venv_name)%f$CLOSE_BRACKET"
+    fi
+    # Set Prompt
+    setopt prompt_subst
+    RPROMPT="$OPEN_BRACKET%F{$BLUE}%D{%a %b %f} - %D{%L:%M}%f$CLOSE_BRACKET"
+    PROMPT="$TOP_LINE$HOST_NAME—$CWD$VENV_PROMPT $vcs_info_msg_0_
+$BOTTOM_LINE$CIRCLE%F{$PINK}$(printf '\u0020\u0020')"
+}
+
+# For k3s
+alias k='kubectl'
+ 
+# Plugins
+## Zoxide
+eval "$(zoxide init zsh)"
+# Initialze starship
+eval "$(starship init zsh)"
+## Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
+# Visual Studio Code 
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+# Brew
+export PATH=${HOME}/brew/bin:${PATH}
+# Java home
+export JAVA_HOME=$(brew --prefix openjdk@21)
+# For python
+export PATH="/opt/homebrew/opt/python@3.13/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/jacob.gadberry/.rd/bin:$PATH"
+####Exporting WSL-compliant bash. DO NOT EDIT!####
+export PATH="$(brew --prefix bash)/bin:$PATH"
+#####Exporting getopts for Modularity Developer Pack! DO NOT EDIT!#####
+export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+export FLAGS_GETOPT_CMD="$(brew --prefix gnu-getopt)/bin/getopt"
+export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
+## For Dotnet
+export DOTNET_ROOT="$(brew --prefix dotnet)/libexec"
+export PATH="$(brew --prefix)/opt/python@3.14/libexec/bin:$PATH"
