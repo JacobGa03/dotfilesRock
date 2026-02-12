@@ -42,21 +42,39 @@ function ftext() {
 alias whatismyip="whatsmyip"
 function whatsmyip () {
     # Internal IP Lookup.
-{{ if eq .chezmoi.os "linux" }}
-    if command -v hostname &> /dev/null; then
+{{- if eq .chezmoi.os "linux" }}
+    if command -v hostname >/dev/null 2>&1; then
         echo -n "Internal IP: "
-        ip -4 addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v 127.0.0.1 | head -n 1
+        # hostname -I prints space-separated addresses; take the first
+        hostname -I | awk '{print $1}'
     else
         echo -n "Internal IP: "
-        hostname -I | awk '{print $1}'
+        # Fallback via ip(8)
+        ip -4 addr show \
+          | awk '/inet / && $2 !~ /^127\./ {print $2}' \
+          | cut -d/ -f1 \
+          | head -n 1
     fi
-{{ else if eq .chezmoi.os "darwin" }}
-    if command -v ipconfig &> /dev/null; then
+{{- else if eq .chezmoi.os "darwin" }}
+    if command -v ipconfig >/dev/null 2>&1; then
         echo -n "Internal IP: "
+        # Common Wi‑Fi interface on Macs; adjust if you use a different NIC
         ipconfig getifaddr en0
-{{ end -}}
+    else
+        echo "ipconfig not found"
+    fi
+{{ end }}
+}
+# Use fzf to cd into a directory
+function fzfz(){
+        local dir=$(find . -type d -print | fzf)
+        if [ "$dir" = "" ]; then
+           cd ./
+        else
+           cd $dir
+        fi
+}
 
-    # External IP Lookup
-    echo -n "External IP: "
-    curl -4 ifconfig.me
+function totalDiff(){
+    git diff -w $(git branch --show-current) -- "$1"
 }
