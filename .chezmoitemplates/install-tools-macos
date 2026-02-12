@@ -24,6 +24,7 @@ packages=(
     zoxide
     neovim
     bash
+    luarocks
     diff-so-fancy
 )
 
