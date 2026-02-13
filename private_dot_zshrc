@@ -18,9 +18,6 @@ if [[ -f ~/.bash_mod ]]; then
     source ~/.bash_mod
 fi
 
-# Aliases
-alias maven="mvn"
-
 # VENV
 # --- Venv Display ---
 get_venv_name() {
@@ -42,9 +39,6 @@ update_vcs_info() {
 $BOTTOM_LINE$CIRCLE%F{$PINK}$(printf '\u0020\u0020')"
 }
 
-# For k3s
-alias k='kubectl'
- 
 # Plugins
 ## Zoxide
 eval "$(zoxide init zsh)"

@@ -1,1 +1,4 @@
-##### TBD FOR MACOS #####
+### macOS aliases
+alias maven="mvn"
+# For k3s
+alias k='kubectl'
