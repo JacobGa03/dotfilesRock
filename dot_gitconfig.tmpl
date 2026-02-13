@@ -2,7 +2,7 @@
 	name = {{ .name | quote }}
 	email = {{ .email | quote }}
 [core]
-    pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = less --tabs=4 -RFX
 [push]
 	default = current
     autoSetupRemote = true
@@ -25,7 +25,9 @@
 [log]
     abbrevCommit = true
 [pager]
-    diff = diff-so-fancy | $PAGER
+    diff = diff-so-fancy | less --tabs=4 -RFX
+    log = diff-so-fancy | less --tabs=4 -RFX
+    show = diff-so-fancy | less --tabs=4 -RFX
 [diff-so-fancy]
     markEmptyLines = false
 [maintenance]
