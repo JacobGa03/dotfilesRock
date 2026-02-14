@@ -20,9 +20,13 @@ if [[ ! $(basename "$SHELL") == bash ]]; then
     chsh -s $(which bash) $(whoami)
 fi
 
-echo "Setting up Starship..."
-curl -sS https://starship.rs/install.sh | sh
-sleep 3
+if [[ ! -f ~/.config/starship.toml ]]; then
+    echo "Setting up Starship..."
+    curl -sS https://starship.rs/install.sh | sh
+    sleep 3
+else
+    echo "Starship is already installed..."
+fi
 
 echo "Setting up theme..."
 starship preset nerd-font-symbols -o ~/.config/starship.toml

@@ -6,13 +6,11 @@ if ! command -v rustup &> /dev/null; then
     source ~/.cargo/env
 fi
 
-echo "Installing tree-sitter-cli from cargo..."
-cargo install tree-sitter-cli
-
+# Needed for tree-sitter
 if command -v tree-sitter --version &> /dev/null; then
     echo "tree-sitter-cli installed..."
 else
-    echo "There was an issue installing tree-sitter-cli!"
-    exit 1
+    echo "Installing tree-sitter-cli from cargo..."
+    cargo install tree-sitter-cli
 fi
 {{ end }}
