@@ -22,3 +22,12 @@ o.wildignore = "*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx"
 
 -- set filetype for .CBL COBOL files.
 -- vim.cmd([[ au BufRead,BufNewFile *.CBL set filetype=cobol ]])
+
+-- tell neovim to treat these files as shell
+vim.filetype.add({
+	filename = {
+		[".bashrc"] = "sh",
+		[".bash_profile"] = "sh",
+		[".zshrc"] = "zsh",
+	},
+})
