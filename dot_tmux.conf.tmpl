@@ -1,0 +1,51 @@
+### Essential Configurations
+set -a terminal-features "tmux-256color:RGB"
+set -g prefix C-SPACE
+set -g base-index 1
+set -g renumber-windows on   
+set -g mode-keys vi
+# Enable mouse support
+set -g mouse on
+# Don't rename windows automatically
+set-option -g allow-rename off
+set-option -g status-position top
+# Set terminal with proper colors
+set -g default-terminal "tmux-256color"
+set -as terminal-features ",xterm-256color:RGB"
+# Use vi keys
+setw -g mode-keys vi
+# Vi-style copy bindings
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi C-v send -X rectangle-toggle
+{{- if eq .chezmoi.os "darwin" }}
+bind -T copy-mode-vi y send -X copy-pipe-and-cancel "pbcopy"  # macOS
+{{- else if eq .chezmoi.os "linux" }}
+bind -T copy-mode-vi y send -X copy-pipe-and-cancel "xclip -selection clipboard -i"  # Linux
+{{ end }}
+
+### Key bindings
+bind r source-file  ~/.tmux.conf \; display "Reloaded!"
+# Vim style pane selection
+bind h select-pane -L
+bind j select-pane -D 
+bind k select-pane -U
+bind l select-pane -R
+# Vim-style pane resizing
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+# Split windows
+bind '"' split-window -v -c "#{pane_current_path}" # Vertial 
+bind % split-window -h -c "#{pane_current_path}" # Hortizontal
+
+### TPM
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'christoomey/vim-tmux-navigator'
+# Plugin settings
+set -g @resurrect-strategy-vim 'session'
+set -g @continuum-restore 'on'
+run '~/.tmux/plugins/tpm/tpm'
