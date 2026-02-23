@@ -47,6 +47,8 @@ eval "$(starship init zsh)"
 ## Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
+# export locally installed binaries
+export PATH="$HOME/.local/bin:$PATH"
 # Visual Studio Code 
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 # Brew
