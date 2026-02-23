@@ -38,7 +38,7 @@ packages_fomrulae=(
     diff-so-fancy
     git
     tmux
-    koekeishiya/formulae/yabai
+    asmvik/formulae/yabai
     koekeishiya/formulae/skhd
 )
 
@@ -69,4 +69,11 @@ for package in "${packages_cask[@]}"; do
 done
 
 echo "Installed all CLI tools for macOS!"
+
+if [[ ! -d ~/.tmux/plugins/ ]]; then
+    echo "Installing TPM..."
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+else
+    echo "TPM is already installed!"
+fi
 {{ end }}
