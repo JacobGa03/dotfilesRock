@@ -1,0 +1,8 @@
+Host github.com
+{{- if eq .chezmoi.os "darwin" }}
+  IdentityFile ~/.ssh/id_ed25519
+  PasswordAuthentication no
+  KbdInteractiveAuthentication no
+  AddKeysToAgent yes
+  UseKeychain yes
+{{- end }}
