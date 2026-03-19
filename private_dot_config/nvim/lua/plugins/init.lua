@@ -87,4 +87,10 @@ return {
 			-- refer to the configuration section below
 		},
 	},
+	{
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("configs.gitsigns")
+		end,
+	},
 }
