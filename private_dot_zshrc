@@ -18,6 +18,15 @@ if [[ -f ~/.bash_mod ]]; then
     source ~/.bash_mod
 fi
 
+# zsh autocomplete
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  fast-syntax-highlighting
+  zsh-autocomplete
+ )
+
 # VENV
 # --- Venv Display ---
 get_venv_name() {
@@ -47,6 +56,8 @@ eval "$(starship init zsh)"
 ## Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
+export EDITOR="nvim"
+
 # export locally installed binaries
 export PATH="$HOME/.local/bin:$PATH"
 # Visual Studio Code 
@@ -55,8 +66,9 @@ export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/b
 export PATH=${HOME}/brew/bin:${PATH}
 # Java home
 export JAVA_HOME=$(brew --prefix openjdk@21)
-# For python
+# For Python
 export PATH="/opt/homebrew/opt/python@3.13/bin:$PATH"
+export PATH="$(brew --prefix)/opt/python@3.14/libexec/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/jacob.gadberry/.rd/bin:$PATH"
 ####Exporting WSL-compliant bash. DO NOT EDIT!####
@@ -66,5 +78,7 @@ export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 export FLAGS_GETOPT_CMD="$(brew --prefix gnu-getopt)/bin/getopt"
 export PATH="/opt/homebrew/opt/gnu-getopt/bin:$PATH"
 ## For Dotnet
-export DOTNET_ROOT="$(brew --prefix dotnet)/libexec"
-export PATH="$(brew --prefix)/opt/python@3.14/libexec/bin:$PATH"
+#export DOTNET_ROOT="$(brew --prefix dotnet)/libexec"
+export DOTNET_ROOT="$HOME/.dotnet"
+export PATH="$DOTNET_ROOT:$DOTNET_ROOT/tools:$PATH"
+export PATH="$HOME/.jbang/bin:$PATH"
