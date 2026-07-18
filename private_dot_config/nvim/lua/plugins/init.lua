@@ -77,6 +77,7 @@ return {
 			require("configs.mason-conform")
 		end,
 	},
+
 	{
 		"folke/todo-comments.nvim",
 		event = { "BufReadPre", "BufNewFile" },
@@ -87,6 +88,19 @@ return {
 			-- refer to the configuration section below
 		},
 	},
+
+	{
+		"kylechui/nvim-surround",
+		version = "^4.0.0", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
+		-- Optional: See `:h nvim-surround.configuration` and `:h nvim-surround.setup` for details
+		-- config = function()
+		--     require("nvim-surround").setup({
+		--         -- Put your configuration here
+		--     })
+		-- end
+	},
+
 	{
 		"lewis6991/gitsigns.nvim",
 		config = function()

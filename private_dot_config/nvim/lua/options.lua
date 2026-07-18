@@ -29,5 +29,10 @@ vim.filetype.add({
 		[".bashrc"] = "sh",
 		[".bash_profile"] = "sh",
 		[".zshrc"] = "zsh",
+		[".env"] = "conf",
+	},
+
+	pattern = {
+		[".*%.env.*"] = "conf",
 	},
 })
