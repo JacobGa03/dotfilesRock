@@ -38,13 +38,13 @@ packages_fomrulae=(
     diff-so-fancy
     git
     tmux
+    lazygit
+    yazi
     asmvik/formulae/yabai
     koekeishiya/formulae/skhd
 )
 
 packages_cask=(
-    bruno
-    visual-studio-code
     wezterm
 )
 
