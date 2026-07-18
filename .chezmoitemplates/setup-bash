@@ -3,33 +3,12 @@ echo "#####Setting up Bash on Your Machine#####"
 
 # Ensure 'bash' version 5.x (or greater) is installed
 if [[ "$BASH_VERSION" =~ ^5\.* ]]; then
-    echo "Updated bash verison already installed!"
+    echo "Updated bash version already installed!"
 else
-    # Update the version of bash
-{{ if eq .chezmoi.os "darwin" }}
-   brew update
-   brew install bash  
-{{ else if eq .chezmoi.os "linux" }}
     sudo apt update
-    sudo apt install bash
-{{ end -}}
+    sudo apt install -y bash
 fi
 
-if [[ ! $(basename "$SHELL") == bash ]]; then
-    echo "Your shell is not bash! Changing it now..."
-    chsh -s $(which bash) $(whoami)
-fi
-
-if [[ ! -f ~/.config/starship.toml ]]; then
-    echo "Setting up Starship..."
-    curl -sS https://starship.rs/install.sh | sh
-    sleep 3
-else
-    echo "Starship is already installed..."
-fi
-
-echo "Setting up theme..."
-starship preset nerd-font-symbols -o ~/.config/starship.toml
-
+{{ template "shell-chsh" (dict "shell" "bash") }}
 echo "Bash setup is complete!"
 {{ end }}
