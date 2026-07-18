@@ -6,7 +6,7 @@ echo "Need to install package manger for windows"
 set -e
 echo "======Beginning Setup for Linux======"
 {{ template "install-tools-linux" . }}
-{{ template "install-nvim-prereqs" . }}
+{{ template "installers-script" . }}
 {{ template "setup-bash" . }}
 {{ template "setup-font" . }}
 
@@ -15,7 +15,7 @@ echo "======Beginning Setup for Linux======"
 set -e
 echo "======Beginning Setup for macOS======"
 {{ template "install-tools-macos" . }}
-{{ template "install-nvim-prereqs" . }}
+{{ template "installers-script" . }}
 {{ template "setup-zsh" . }}
 {{ template "setup-font" . }}
 
