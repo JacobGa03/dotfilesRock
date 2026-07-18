@@ -78,3 +78,9 @@ function fzfz(){
 function totalDiff(){
     git diff -w $(git branch --show-current) -- "$1"
 }
+
+function pullPR(){
+    PR_ID=$1
+    echo "Pulling PR #${PR_ID} from  $(git remote show upstream | grep "Fetch URL")"
+    git fetch upstream refs/pull-requests/$PR_ID/from:pr-$PR_ID
+}
