@@ -1,0 +1,42 @@
+{{ define "installers-apt" }}
+function is_installed() {
+    dpkg -s "$1" &> /dev/null
+}
+
+function is_upgradable() {
+    apt list --upgradable 2>/dev/null | grep -q "^$1/"
+}
+
+function is_ppa_added() {
+    local ppa="$1"
+    grep -Rq "^deb .*$ppa" /etc/apt/sources.list /etc/apt/sources.list.d/
+}
+
+packages=(
+{{ range .packages.apt.packages }}    {{ . | quote }}
+{{ end }})
+
+echo "Installing tools for apt..."
+sudo apt update
+for package in "${packages[@]}"; do
+    if ! is_installed "$package"; then
+        sudo apt install -y -qq "$package"
+    elif is_upgradable "$package"; then
+        sudo apt install -y -qq "$package"
+    else
+        echo "$package is already up to date!"
+    fi
+done
+
+echo "Setting up tools not directly available from apt..."
+{{ range .packages.apt.ppas }}
+if ! is_ppa_added {{ .ppa | quote }}; then
+    sudo add-apt-repository -y ppa:{{ .ppa }}
+    sudo apt update
+    sudo apt install -y {{ .package }}
+else
+    echo "{{ .package }} is already installed via PPA!"
+fi
+{{ end -}}
+echo "apt packages installed!"
+{{ end }}

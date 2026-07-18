@@ -1,0 +1,72 @@
+packages:
+  brew:
+    formula:
+      - fzf
+      - eza
+      - ripgrep
+      - git
+      - zoxide
+      - neovim
+      - bash
+      - luarocks
+      - diff-so-fancy
+      - tmux
+      - lazygit
+      - yazi
+    cask:
+      - wezterm
+
+  apt:
+    packages:
+      - fzf
+      - eza
+      - git
+      - ripgrep
+      - zsh
+      - curl
+      - multitail
+      - less
+      - luarocks
+      - zoxide
+      - tmux
+    ppas:
+      - ppa: aos1/diff-so-fancy
+        package: diff-so-fancy
+
+  # First-class Linux snap support. Empty today - preserves current
+  # behavior exactly while making snap ready to use. Add a tool here,
+  # no template edits needed:
+  #   - name: spotify
+  #     classic: false
+  snap: []
+
+  # Generic check/install(/post) abstraction - shared by both OSes for
+  # rustup/tree-sitter-cli/TPM/starship today, and the extension point
+  # for any future curl|sh-style provider installer:
+  #   - name: bun
+  #     os: [linux, darwin]
+  #     check: 'command -v bun'
+  #     install: 'curl -fsSL https://bun.sh/install | bash'
+  script_installers:
+    - name: tpm
+      os: [linux, darwin]
+      check: 'test -d "$HOME/.tmux/plugins/tpm"'
+      install: 'git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"'
+
+    - name: rustup
+      os: [linux, darwin]
+      check: "command -v rustup"
+      install: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        source "$HOME/.cargo/env"
+
+    - name: tree-sitter-cli
+      os: [linux, darwin]
+      check: "command -v tree-sitter"
+      install: "cargo install tree-sitter-cli"
+
+    - name: starship
+      os: [linux, darwin]
+      check: 'test -f "$HOME/.config/starship.toml"'
+      install: "curl -sS https://starship.rs/install.sh | sh"
+      post: 'starship preset nerd-font-symbols -o "$HOME/.config/starship.toml"'

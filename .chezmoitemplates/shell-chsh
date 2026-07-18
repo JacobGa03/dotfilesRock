@@ -1,0 +1,6 @@
+{{ define "shell-chsh" }}
+if [[ ! $(basename "$SHELL") == {{ .shell }} ]]; then
+    echo "Your shell is not {{ .shell }}! Changing it now..."
+    chsh -s "$(which {{ .shell }})" "$(whoami)"
+fi
+{{ end }}

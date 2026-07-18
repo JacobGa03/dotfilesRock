@@ -1,0 +1,16 @@
+{{ define "installers-script" }}
+echo "#####Running provider script-installers#####"
+{{ range .packages.script_installers -}}
+{{- if has $.chezmoi.os .os }}
+if ! {{ .check }} &> /dev/null; then
+    echo "Installing {{ .name }}..."
+{{ .install | trim | indent 4 }}
+else
+    echo "{{ .name }} is already installed!"
+fi
+{{- if hasKey . "post" }}
+{{ .post }}
+{{- end }}
+{{ end -}}
+{{- end }}
+{{ end }}

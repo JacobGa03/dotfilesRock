@@ -1,0 +1,23 @@
+{{ define "installers-snap" }}
+{{- if .packages.snap }}
+function is_snap_installed() {
+    snap list "$1" &> /dev/null
+}
+
+if ! command -v snap &> /dev/null; then
+    echo "snapd not found, installing now..."
+    sudo apt update
+    sudo apt install -y snapd
+fi
+
+echo "Installing tools from snap..."
+{{ range .packages.snap }}
+if ! is_snap_installed {{ .name | quote }}; then
+    sudo snap install {{ .name }}{{ if .classic }} --classic{{ end }}
+else
+    echo "{{ .name }} (snap) is already installed!"
+fi
+{{ end -}}
+echo "snap packages installed!"
+{{- end }}
+{{ end }}
