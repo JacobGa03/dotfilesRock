@@ -5,4 +5,12 @@ Host github.com
   KbdInteractiveAuthentication no
   AddKeysToAgent yes
   UseKeychain yes
+{{- else if eq .chezmoi.os "linux" }}
+  IdentityFile ~/.ssh/id_ed25519
+  PasswordAuthentication no
+  KbdInteractiveAuthentication no
 {{- end }}
+Host jacobpi.local
+    IdentityFile ~/.ssh/jacobpi
+    PasswordAuthentication no
+    KbdInteractiveAuthentication no
