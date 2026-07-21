@@ -17,7 +17,7 @@ machine setup for macOS and Linux (a Windows branch exists but is a stub).
 
 ```
 .chezmoi.toml.tmpl              # one-time prompts: name, email, editor (nvim/vim/code)
-.chezmoiignore                  # OS-conditional ignores (skips /Users/... on non-darwin, AppData on non-windows)
+.chezmoiignore                  # OS-conditional ignores (skips /Users/... on non-darwin, AppData on non-windows, macOS-only configs like skhd/yabai on non-darwin)
 .chezmoidata/
   packages.yaml                  # ALL package/tool data for install scripts — see below
 .chezmoiscripts/
@@ -95,7 +95,15 @@ directly from the entrypoint if it's OS-agnostic (like `installers-script`).
    the standard way to sanity-check the other OS's output without a second
    machine. Follow with `bash -n` on the rendered output to catch shell
    syntax errors without executing anything.
-6. **`chezmoi apply --dry-run --verbose --include=scripts`** scopes a dry-run
+6. **`.chezmoiremove` only removes files NOT in the source state.** If a file
+   is in the source state (e.g. `private_dot_config/skhd/`) AND listed in
+   `.chezmoiremove`, `chezmoi apply` will deploy it from source *after*
+   scheduling removal — the file comes back. To suppress an OS-specific file
+   on another OS, you need **both**: `.chezmoiignore` (excludes it from source
+   state on that OS) **and** `.chezmoiremove` (cleans up any leftover copies).
+   `.chezmoiremove` alone is a cleanup mechanism for orphaned files, not a
+   suppression mechanism for managed files.
+7. **`chezmoi apply --dry-run --verbose --include=scripts`** scopes a dry-run
    to just `run_once_*` scripts — useful if unrelated drift elsewhere in the
    managed file set (e.g. a manually-edited `.bashrc`) is blocking a full
    `chezmoi apply --dry-run`.
