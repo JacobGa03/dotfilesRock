@@ -77,7 +77,18 @@ return {
 			require("configs.mason-conform")
 		end,
 	},
-
+	{
+		"alexremstedt/go-template-lsp.nvim",
+		dependencies = {
+			"neovim/nvim-lspconfig",
+			"williamboman/mason.nvim",
+		},
+		ft = "gotmpl",
+		opts = {},
+		config = function()
+			require("configs.go-template-lsp")
+		end,
+	},
 	{
 		"folke/todo-comments.nvim",
 		event = { "BufReadPre", "BufNewFile" },
