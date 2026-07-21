@@ -3,8 +3,6 @@
     .config/skhd/**
     .config/yabai/
     .config/yabai/**
-    /Users/jacob.gadberry/
-    /Users/jacob.gadberry/**
 {{- end }}
 
 {{- if ne .chezmoi.os "windows" }}
@@ -12,3 +10,7 @@
    AppData/Local/**
 {{- end }}
 
+{{- if ne .chezmoi.os "darwin" }}
+    /Users/jacob.gadberry/
+    /Users/jacob.gadberry/**
+{{- end }}
