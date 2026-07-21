@@ -13,6 +13,7 @@ packages:
       - tmux
       - lazygit
       - yazi
+      - atuin
     cask:
       - wezterm
 
@@ -48,6 +49,17 @@ packages:
   #     check: 'command -v bun'
   #     install: 'curl -fsSL https://bun.sh/install | bash'
   script_installers:
+    - name: claudecode
+      os: [darwin]
+      check: 'test -d $HOME/.local/bin/claude'
+      install: 'curl -fsSL https://claude.ai/install.sh | bash'
+
+    - name: opencode
+      os: [linux]
+      check: 'test -d "$HOME/.opencode/bin"'
+      install: 'curl -fsSL https://opencode.ai/install | bash'
+      post_install: 'export PATH="$HOME/.opencode/bin:$PATH"'
+
     - name: tpm
       os: [linux, darwin]
       check: 'test -d "$HOME/.tmux/plugins/tpm"'
@@ -59,14 +71,21 @@ packages:
       install: |
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
         source "$HOME/.cargo/env"
+      post_install: '[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"'
 
     - name: tree-sitter-cli
       os: [linux, darwin]
       check: "command -v tree-sitter"
       install: "cargo install tree-sitter-cli"
 
+    - name: atuin
+      os: [linux]
+      check: "command -v atuin"
+      install: "curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- --non-interactive"
+      post_install: '[ -d "$HOME/.atuin/bin" ] && export PATH="$HOME/.atuin/bin:$PATH"'
+
     - name: starship
       os: [linux, darwin]
       check: 'test -f "$HOME/.config/starship.toml"'
       install: "curl -sS https://starship.rs/install.sh | sh"
-      post: 'starship preset nerd-font-symbols -o "$HOME/.config/starship.toml"'
+      post_install: 'starship preset nerd-font-symbols -o "$HOME/.config/starship.toml"'

@@ -8,8 +8,8 @@ if ! {{ .check }} &> /dev/null; then
 else
     echo "{{ .name }} is already installed!"
 fi
-{{- if hasKey . "post" }}
-{{ .post }}
+{{- if hasKey . "post_install" }}
+{{ .post_install }}
 {{- end }}
 {{ end -}}
 {{- end }}
