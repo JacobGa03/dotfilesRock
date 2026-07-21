@@ -2,8 +2,11 @@
 {{- $name := promptStringOnce . "name" "Your name" -}}
 {{- $editors:= list "nvim" "vim" "code" -}}
 {{- $editor := promptChoiceOnce . "editor" "What editor do you want to use?" $editors -}}
+{{- $computerType := list "personal" "work" -}}
+{{- $computer := promptChoiceOnce . "computer" "Is this a personal or work computer?" $computerType -}}
 
 [data]
     name = {{ $name | quote }}
     email = {{ $email | quote }}
     editor = {{ $editor | quote }}
+    computer = {{ $computer | quote }}
