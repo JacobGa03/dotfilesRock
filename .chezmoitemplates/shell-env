@@ -1,0 +1,32 @@
+{{ define "shell-env" }}
+# --- Universal paths ---
+{{- range .shell.path }}
+{{- $entry := .entry }}
+{{- if hasKey . "os" }}
+{{- $osList := .os }}
+{{- $found := false }}
+{{- range $osList }}
+{{- if eq . $.chezmoi.os }}
+{{- $found = true }}
+{{- end }}
+{{- end }}
+{{- if $found }}
+export PATH="{{ $entry }}:$PATH"
+{{- end }}
+{{- else }}
+export PATH="{{ $entry }}:$PATH"
+{{- end }}
+{{- end }}
+
+# --- Package manager detection ---
+if command -v brew &>/dev/null; then
+    eval "$(brew shellenv)"
+fi
+
+# --- Script installer PATH additions ---
+{{- range .packages.script_installers }}
+{{- if hasKey . "post_install" }}
+{{ .post_install }}
+{{- end }}
+{{- end }}
+{{ end }}

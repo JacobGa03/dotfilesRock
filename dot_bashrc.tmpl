@@ -90,6 +90,9 @@ __fzf_historial() {
 
 bind -x '"\C-r": __fzf_historial'
 
+# Source shared environment (PATH, env vars)
+[ -f ~/.shell_env ] && source ~/.shell_env
+
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
@@ -100,14 +103,15 @@ if [ -f ~/.bash_functions ]; then
     source ~/.bash_functions
 fi
 
-# Initialze zoxide for use
+# Initialize zoxide for use
 eval "$(zoxide init bash)"
-# Initialze starship
+# Initialize starship
 eval "$(starship init bash)"
+# Atuin
+eval "$(atuin init bash)"
 
 {{ if eq .chezmoi.os "linux" -}}
 {{ template "dot_bashrc/dot_bashrc-linux" . -}}
 {{ else if eq .chezmoi.os "darwin" }}
 {{ template "dot_bashrc/dot_bashrc-macos" . }}
 {{ end }}
-

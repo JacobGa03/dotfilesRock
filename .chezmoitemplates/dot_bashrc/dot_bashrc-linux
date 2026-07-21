@@ -7,11 +7,5 @@ fi
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# Source rust configuration
-source "$HOME/.cargo/env"
-
-# Export your important path variables here
-export PATH="/home/jacob/development/flutter/bin:$PATH"
-export PATH="/home/jacob/Android/Sdk/:$PATH"
-
-[ -f "/home/jacob/.ghcup/env" ] && . "/home/jacob/.ghcup/env" # ghcup-env
+# Source ghcup
+[ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env"

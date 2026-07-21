@@ -1,0 +1,5 @@
+shell:
+  path:
+    - name: local bin
+      entry: "$HOME/.local/bin"
+      os: [linux, darwin]
