@@ -41,6 +41,20 @@ packages:
   #     classic: false
   snap: []
 
+  # Flatpak/Flathub applications. Add app_id and human-readable name.
+  # Installing via flathub requires flatpak to be installed first.
+  flatpak:
+    - app_id: org.mozilla.firefox
+      name: Firefox
+    - app_id: com.discordapp.Discord
+      name: Discord 
+    - app_id: com.bitwarden.desktop
+      name: Bitwarden 
+    - app_id: org.localsend.localsend_app
+      name: LocalSend 
+    - app_id: com.moonlight_stream.Moonlight
+      name: Moonlight 
+
   # Generic check/install(/post) abstraction - shared by both OSes for
   # rustup/tree-sitter-cli/TPM/starship today, and the extension point
   # for any future curl|sh-style provider installer:

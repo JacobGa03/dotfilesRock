@@ -1,4 +1,5 @@
 {{ define "install-tools-linux" }}
 {{ template "installers-apt" . }}
 {{ template "installers-snap" . }}
+{{ template "installers-flatpak" . }}
 {{ end }}

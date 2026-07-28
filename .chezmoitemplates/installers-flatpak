@@ -1,0 +1,33 @@
+{{ define "installers-flatpak" }}
+{{- if .packages.flatpak }}
+function is_flatpak_installed() {
+    flatpak list --user --app | grep -q "$1"
+}
+
+function is_flathub_added() {
+    flatpak remote-list --user | grep -q "flathub"
+}
+
+if ! command -v flatpak &> /dev/null; then
+    echo "flatpak not found, installing now..."
+    sudo apt update
+    sudo apt install -y flatpak
+fi
+
+if ! is_flathub_added; then
+    echo "Adding Flathub remote..."
+    flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+fi
+
+echo "Installing tools from Flatpak..."
+{{ range .packages.flatpak }}
+if ! is_flatpak_installed {{ .app_id | quote }}; then
+    flatpak install --user -y flathub {{ .app_id }}
+else
+    echo "{{ .name }} (flatpak) is already installed, checking for updates..."
+    flatpak update --user -y {{ .app_id }}
+fi
+{{ end -}}
+echo "Flatpak packages installed!"
+{{- end }}
+{{ end }}
