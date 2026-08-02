@@ -51,7 +51,14 @@ templates. The shape:
   Each entry: `{name, os: [linux, darwin, ...], check, install, post?}`.
   `check` is a shell condition (install runs only if it's false), `install`
   is a shell snippet (can be multiline via YAML `|`), `post` is optional and
-  runs unconditionally every apply regardless of `check`.
+  runs unconditionally every apply regardless of `check`. Entries may also
+  carry an optional `computer: [personal|work]` list — the entry only
+  installs on machines whose role (the `computer` data var, set by the
+  `.chezmoi.toml.tmpl` init prompt, or added by hand as `computer = "<role>"`
+  under `[data]` in `~/.config/chezmoi/chezmoi.toml`) is in the list. `installers-script` handles the gate; entries
+  without a `computer` key install everywhere (backward compatible). Use this
+  to decouple install decisions from OS (e.g. opencode → personal, claudecode
+  → work) instead of narrowing `os`.
 
 **To add a new tool**: add a data entry to the relevant list in
 `packages.yaml`. Do not add bash logic to a template unless the install

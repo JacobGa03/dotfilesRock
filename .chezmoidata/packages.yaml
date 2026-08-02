@@ -64,12 +64,14 @@ packages:
   #     install: 'curl -fsSL https://bun.sh/install | bash'
   script_installers:
     - name: claudecode
-      os: [darwin]
+      os: [linux, darwin]
+      computer: [work]
       check: 'test -d $HOME/.local/bin/claude'
       install: 'curl -fsSL https://claude.ai/install.sh | bash'
 
     - name: opencode
-      os: [linux]
+      os: [linux, darwin]
+      computer: [personal]
       check: 'test -d "$HOME/.opencode/bin"'
       install: 'curl -fsSL https://opencode.ai/install | bash'
       post_install: 'export PATH="$HOME/.opencode/bin:$PATH"'

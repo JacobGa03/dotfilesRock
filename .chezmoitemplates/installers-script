@@ -1,7 +1,7 @@
 {{ define "installers-script" }}
 echo "#####Running provider script-installers#####"
 {{ range .packages.script_installers -}}
-{{- if has $.chezmoi.os .os }}
+{{- if and (has $.chezmoi.os .os) (or (not (hasKey . "computer")) (and (hasKey $ "computer") (has $.computer .computer))) }}
 if ! {{ .check }} &> /dev/null; then
     echo "Installing {{ .name }}..."
 {{ .install | trim | indent 4 }}
