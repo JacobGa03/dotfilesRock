@@ -8,7 +8,7 @@ local options = {
 		-- "go",
 		-- "gomod",
 		-- "gosum",
-		-- "gotmpl",
+		"gotmpl",
 		-- "gowork",
 		-- "haskell",
 		"java",

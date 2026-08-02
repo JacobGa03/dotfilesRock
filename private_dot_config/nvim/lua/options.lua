@@ -34,5 +34,6 @@ vim.filetype.add({
 
 	pattern = {
 		[".*%.env.*"] = "conf",
+		[".*%.conf"] = "conf",
 	},
 })
