@@ -56,6 +56,9 @@ alias mkgz='tar -cvzf'
 alias untar='tar -xvf'
 alias ungz='tar -xvzf'
 
+# Clear terminal output
+alias cls="clear"
+
 {{ if eq .chezmoi.os "linux" }}
 {{ template "dot_bashrc_alias-linux" . }}
 {{ else if eq .chezmoi.os "darwin" }}
