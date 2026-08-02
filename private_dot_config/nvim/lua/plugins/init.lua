@@ -9,13 +9,6 @@ return {
 			"TmuxNavigatePrevious",
 			"TmuxNavigatorProcessList",
 		},
-		keys = {
-			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
-		},
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -117,5 +110,98 @@ return {
 		config = function()
 			require("configs.gitsigns")
 		end,
+	},
+
+	{
+		"NeogitOrg/neogit",
+		lazy = true,
+		cmd = "Neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"sindrets/diffview.nvim",
+		},
+		config = function()
+			require("configs.neogit")
+		end,
+	},
+
+	{
+		"nickjvandyke/opencode.nvim",
+		enabled = function()
+			return vim.fn.executable("opencode") == 1
+		end,
+		version = "*",
+		event = "VeryLazy",
+		config = function()
+			vim.g.opencode_opts = {
+				server = {
+					start = function()
+						vim.fn.system("tmux split-window -h -d 'opencode --port'")
+					end,
+				},
+			}
+
+			vim.keymap.set({ "n", "x" }, "<leader>oca", function()
+				require("opencode").ask("@this: ")
+			end, { desc = "Ask OpenCode" })
+			vim.keymap.set({ "n", "x" }, "<leader>ocs", function()
+				require("opencode").select()
+			end, { desc = "Select OpenCode" })
+			vim.keymap.set({ "n", "x" }, "<leader>oco", function()
+				return require("opencode").operator("@this ")
+			end, { desc = "Append range to OpenCode", expr = true })
+			vim.keymap.set({ "n" }, "<leader>ocO", function()
+				return require("opencode").operator("@this ") .. "_"
+			end, { desc = "Append line to OpenCode", expr = true })
+			vim.keymap.set({ "n" }, "<leader>ocu", function()
+				require("opencode").command("session.half.page.up")
+			end, { desc = "Scroll OpenCode up" })
+			vim.keymap.set({ "n" }, "<leader>ocd", function()
+				require("opencode").command("session.half.page.down")
+			end, { desc = "Scroll OpenCode down" })
+		end,
+	},
+
+	{
+		"coder/claudecode.nvim",
+		enabled = function()
+			return vim.fn.executable("claude") == 1
+		end,
+		dependencies = { "folke/snacks.nvim" },
+		config = true,
+		cmd = {
+			"ClaudeCode",
+			"ClaudeCodeFocus",
+			"ClaudeCodeSelectModel",
+			"ClaudeCodeAdd",
+			"ClaudeCodeSend",
+			"ClaudeCodeTreeAdd",
+			"ClaudeCodeStatus",
+			"ClaudeCodeStart",
+			"ClaudeCodeStop",
+			"ClaudeCodeOpen",
+			"ClaudeCodeClose",
+			"ClaudeCodeDiffAccept",
+			"ClaudeCodeDiffDeny",
+			"ClaudeCodeCloseAllDiffs",
+		},
+		keys = {
+			{ "<leader>cc", nil, desc = "AI/Claude Code" },
+			{ "<leader>ccc", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+			{ "<leader>ccf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+			{ "<leader>ccr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+			{ "<leader>ccC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+			{ "<leader>ccm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+			{ "<leader>ccb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+			{ "<leader>ccs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+			{
+				"<leader>ccs",
+				"<cmd>ClaudeCodeTreeAdd<cr>",
+				desc = "Add file",
+				ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw", "snacks_picker_list" },
+			},
+			{ "<leader>cca", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+			{ "<leader>ccd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+		},
 	},
 }
