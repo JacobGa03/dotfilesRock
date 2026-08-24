@@ -3,3 +3,9 @@ shell:
     - name: local bin
       entry: "$HOME/.local/bin"
       os: [linux, darwin]
+    - name: gnu-getopts opt
+      entry: "/opt/homebrew/opt/gnu-getopt/bin"
+      os: [darwin]
+    - name: gnu-getopts usr
+      entry: "/usr/local/opt/gnu-getopt/bin"
+      os: [darwin]
