@@ -8,6 +8,7 @@ local lspconfig = require("nvchad.configs.lspconfig") -- nvim 0.11
 -- list of all servers configured.
 lspconfig.servers = {
 	"lua_ls",
+	"bashls",
 	-- "clangd",
 	-- "gopls",
 	-- "hls",
