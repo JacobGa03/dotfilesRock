@@ -168,30 +168,22 @@ return {
 			return vim.fn.executable("claude") == 1
 		end,
 		dependencies = { "folke/snacks.nvim" },
-		config = true,
+		config = function()
+			require("configs.claudecode")
+		end,
 		cmd = {
-			"ClaudeCode",
-			"ClaudeCodeFocus",
-			"ClaudeCodeSelectModel",
 			"ClaudeCodeAdd",
 			"ClaudeCodeSend",
 			"ClaudeCodeTreeAdd",
 			"ClaudeCodeStatus",
 			"ClaudeCodeStart",
 			"ClaudeCodeStop",
-			"ClaudeCodeOpen",
-			"ClaudeCodeClose",
 			"ClaudeCodeDiffAccept",
 			"ClaudeCodeDiffDeny",
 			"ClaudeCodeCloseAllDiffs",
 		},
 		keys = {
 			{ "<leader>cc", nil, desc = "AI/Claude Code" },
-			{ "<leader>ccc", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
-			{ "<leader>ccf", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
-			{ "<leader>ccr", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
-			{ "<leader>ccC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
-			{ "<leader>ccm", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
 			{ "<leader>ccb", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
 			{ "<leader>ccs", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
 			{
@@ -202,6 +194,7 @@ return {
 			},
 			{ "<leader>cca", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
 			{ "<leader>ccd", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+			{ "<leader>ccq", mode = "v", desc = "Ask Claude about selection" },
 		},
 	},
 }
