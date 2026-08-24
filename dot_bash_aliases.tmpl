@@ -33,9 +33,13 @@ alias gcl='git clone'
 alias gbr='git branch -v'
 alias gf='git fetch'
 alias gst='git stash'
+{{- if lookPath "lazygit" }}
+alias lg='lazygit'
+{{ end }}
 
 # Vim is Neovim
 alias vim='nvim'
+alias vi='nvim'
 alias fzvim='vim -o `fzf`'
 alias cd..='cd ..'
 alias home='cd ~'
@@ -59,6 +63,13 @@ alias ungz='tar -xvzf'
 # Clear terminal output
 alias cls="clear"
 
+# Coding Agent aliases 
+{{- if lookPath "claude" }}
+alias clc='claude --ide'
+{{ end -}}
+{{- if lookPath "opencode" }}
+alias cc='opencode'
+{{ end -}}
 {{ if eq .chezmoi.os "linux" }}
 {{ template "dot_bashrc_alias-linux" . }}
 {{ else if eq .chezmoi.os "darwin" }}
