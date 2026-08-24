@@ -127,7 +127,7 @@ function startKubes() {
     cd "$DEV_PACK_LOCATION"/local
     chmod -R 777 *
 
-    build="${build:-y}"
+    build="${1:-y}"
 
     set +a
     source services.conf
