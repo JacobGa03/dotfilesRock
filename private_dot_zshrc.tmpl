@@ -14,44 +14,21 @@ HISTFILE=~/.zsh_history
 [[ -f ~/.bash_functions ]] && source ~/.bash_functions
 [[ -f ~/.bash_mod ]] && source ~/.bash_mod
 
-# zsh autocomplete
+# zsh plugins
 plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
   fast-syntax-highlighting
   zsh-autocomplete
- )
+)
 
-# VENV
-# --- Venv Display ---
-get_venv_name() {
-    if [[ -n "$VIRTUAL_ENV" ]]; then
-        echo "($(basename "$VIRTUAL_ENV"))"
-    fi
-}
-update_vcs_info() {
-    vcs_info
-    # Venv prompt (only if active)
-    VENV_PROMPT=""
-    if [[ -n "$VIRTUAL_ENV" ]]; then
-        VENV_PROMPT="$OPEN_BRACKET%F{$GREEN}$(get_venv_name)%f$CLOSE_BRACKET"
-    fi
-    # Set Prompt
-    setopt prompt_subst
-    RPROMPT="$OPEN_BRACKET%F{$BLUE}%D{%a %b %f} - %D{%L:%M}%f$CLOSE_BRACKET"
-    PROMPT="$TOP_LINE$HOST_NAME—$CWD$VENV_PROMPT $vcs_info_msg_0_
-$BOTTOM_LINE$CIRCLE%F{$PINK}$(printf '\u0020\u0020')"
-}
-
-# Plugins
-## Zoxide
+# Initialize plugins and tools
 eval "$(zoxide init zsh)"
-# Initialize starship
 eval "$(starship init zsh)"
-# Atuin
-eval "$(atuin init zsh)"
-## Set up fzf key bindings and fuzzy completion
-source <(fzf --zsh)
+eval "$(atuin init zsh)"  
 
 export EDITOR="nvim"
+
+# Use Emacs key bindings
+bindkey -e
