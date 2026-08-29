@@ -1,3 +1,4 @@
+-- Ensure all the given formatters are installed
 local format = package.loaded["conform"]
 -- List of formatters to ignore during install
 local ignore_install = {}
@@ -13,7 +14,7 @@ local function table_contains(table, value)
 end
 
 -- Build a list of linters to install minus the ignored list.
-local all_formatters = { black, isort, shfmt, stylelua }
+local all_formatters = { "black", "isort", "shfmt", "stylelua" }
 for _, v in pairs(format.formatters_by_ft) do
 	for _, formatter in ipairs(v) do
 		if not table_contains(ignore_install, formatter) then
