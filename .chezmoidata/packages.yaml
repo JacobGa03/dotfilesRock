@@ -54,6 +54,8 @@ packages:
       name: LocalSend 
     - app_id: com.moonlight_stream.Moonlight
       name: Moonlight 
+    - app_id: com.usebruno.Bruno
+      name: Bruno
 
   # Generic check/install(/post) abstraction - shared by both OSes for
   # rustup/tree-sitter-cli/TPM/starship today, and the extension point
