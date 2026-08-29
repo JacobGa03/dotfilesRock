@@ -26,6 +26,11 @@ bind r source-file  ~/.tmux.conf \; display "Reloaded!"
 # Split windows
 bind '"' split-window -v -c "#{pane_current_path}" # Vertial 
 bind % split-window -h -c "#{pane_current_path}" # Hortizontal
+# Pane resizing (repeatable: press prefix once, then H/J/K/L repeatedly)
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
 
 ### TPM
 set -g @plugin 'tmux-plugins/tpm'
