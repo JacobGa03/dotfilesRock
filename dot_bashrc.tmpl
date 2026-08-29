@@ -51,47 +51,11 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
-__fzf_historial() {
-  echo " "
-  echo -ne "\033[2;H"
-
-  local histfile="${HISTFILE:-$HOME/.bash_history}"
-  [[ ! -f "$histfile" ]] && return
-
-  local lang="${LANG:-en}"
-  local titulo prompt
-  if [[ "$lang" =~ ^es ]]; then
-    titulo="Command history"
-    prompt="Command ▶ "
-  else
-    titulo="Command history"
-    prompt="Command ▶ "
-  fi
-
-  local cmd
-  cmd=$(awk '{ l[NR]=$0 } END { for (i=NR;i>0;i--) print l[i] }' "$histfile" \
-        | grep -v '^#' | grep -v '^$' \
-        | fzf \
-            --height=50% \
-            --layout=default \
-            --border=rounded \
-            --cycle \
-            --border-label="] $titulo [" \
-            --preview='echo {}' \
-            --preview-window=down:0:hidden \
-            --margin=1,35% \
-            --color='border:2,label:6:bold,bg+:1,fg+:15:bold,pointer:6:bold,marker:2:bold,prompt:6:bold' \
-            --pointer='▶ ' \
-            --marker='▶ ' \
-            --prompt="$prompt")
-
-  [[ -n "$cmd" ]] && READLINE_LINE="$cmd" && READLINE_POINT="${#cmd}"
-}
-
-bind -x '"\C-r": __fzf_historial'
-
 # Source shared environment (PATH, env vars)
 [ -f ~/.shell_env ] && source ~/.shell_env
+
+# Bash line editor 
+source -- ~/.local/share/blesh/ble.sh
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then

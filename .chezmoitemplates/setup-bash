@@ -9,6 +9,12 @@ else
     sudo apt install -y bash
 fi
 
+echo "Installing bash line editor..."
+if [ ! -f ~/.local/share/blesh/ble.sh ]; then
+    git clone --recursive --depth 1 --shallow-submodules git@github.com:akinomyoga/ble.sh.git
+    make -C ble.sh install PREFIX=~/.local
+fi
+
 {{ template "shell-chsh" (dict "shell" "bash") }}
 echo "Bash setup is complete!"
 {{ end }}
