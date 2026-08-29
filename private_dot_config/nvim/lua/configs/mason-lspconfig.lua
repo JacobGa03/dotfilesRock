@@ -1,3 +1,4 @@
+-- Ensures that the following LSP servers are installed
 -- local lspconfig = package.loaded["lspconfig"] -- pre nvim 0.11
 local lspconfig = require("nvchad.configs.lspconfig") -- nvim 0.11
 
@@ -15,7 +16,7 @@ local function table_contains(table, value)
 end
 
 -- Build a list of lsp servers to install minus the ignored list.
-local all_servers = { luals, bashls, jdtls, pyright, "yaml-language-server", "json-lsp" }
+local all_servers = { "lua_ls", "bashls", "jdtls", "pyright", "yamlls", "jsonls", "rust_analyzer" }
 for _, s in ipairs(lspconfig.servers) do
 	if not table_contains(ignore_install, s) then
 		table.insert(all_servers, s)

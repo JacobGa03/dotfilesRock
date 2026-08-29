@@ -9,6 +9,7 @@ local lspconfig = require("nvchad.configs.lspconfig") -- nvim 0.11
 lspconfig.servers = {
 	"lua_ls",
 	"bashls",
+	"rust_analyzer",
 	-- "clangd",
 	-- "gopls",
 	-- "hls",
@@ -103,6 +104,21 @@ vim.lsp.config("lua_ls", { -- nvim 0.11
 				maxPreload = 100000,
 				preloadFileSize = 10000,
 			},
+		},
+	},
+})
+
+vim.lsp.config("rust_analyzer", {
+	on_attach = function(client, bufnr)
+		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.documentRangeFormattingProvider = false
+		on_attach(client, bufnr)
+	end,
+	on_init = on_init,
+	capabilities = capabilities,
+	settings = {
+		["rust-analyzer"] = {
+			checkOnSave = true,
 		},
 	},
 })

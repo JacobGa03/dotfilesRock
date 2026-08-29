@@ -7,6 +7,7 @@ local options = {
 		-- go = { "gofumpt", "goimports-reviser", "golines" },
 		-- haskell = { "fourmolu", "stylish-haskell" },
 		python = { "isort", "black" },
+		rust = { "rustfmt" },
 	},
 
 	formatters = {

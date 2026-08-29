@@ -19,6 +19,7 @@ local options = {
 		-- "odin",
 		"printf",
 		"python",
+		"rust",
 		"toml",
 		"vim",
 		"vimdoc",
