@@ -10,7 +10,3 @@
    AppData/Local/**
 {{- end }}
 
-{{- if ne .chezmoi.os "darwin" }}
-    /Users/jacob.gadberry/
-    /Users/jacob.gadberry/**
-{{- end }}
